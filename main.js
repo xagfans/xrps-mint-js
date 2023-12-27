@@ -55,9 +55,9 @@ async function payment(txt, address, secret) {
 }
 
 async function mint(address, secret) {
-	const path = 'input.txt';
-	const data = fs.readFileSync(path, 'utf8');
-	const lines = data.split('\n');
+  const path = 'input.txt';
+  const data = fs.readFileSync(path, 'utf8');
+  const lines = data.split('\n');
 
   let tasks = [];
   for (let i=0; i<lines.length; i++) {
@@ -72,7 +72,7 @@ async function mint(address, secret) {
   await sleep(3000);
 
   let fail_num = 0;
-	for (let i=0; i<tasks.length; i++) {
+  for (let i=0; i<tasks.length; i++) {
     let line = tasks[i];
     try {
       let result = await payment(line, address, secret);
@@ -83,25 +83,25 @@ async function mint(address, secret) {
       console.log(i+1, line, err.message);
       fail_num++;
     }
-	}
+  }
   console.log(`${fail_num} lines failed.`);
 }
 
 async function main() {
-	try {
+  try {
     const secret = "YOUR_SECRET";
     const keypair = remote.deriveKeypair(secret);
     const address = RippleAPI.deriveClassicAddress(keypair.publicKey);
 
-		await remote.connect();
+    await remote.connect();
     if (await trustline(address)) {
       await mint(address, secret);
     } else {
       console.log("You need to add XRPS trustline!");
     }
-	} catch(err) {
-		console.error(err);
-	}
+  } catch(err) {
+    console.error(err);
+  }
 }
 
 main();
