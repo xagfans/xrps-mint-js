@@ -7,7 +7,7 @@ const sleep = (timeountMS) => new Promise((resolve) => {
 
 const ripple = new RippleAPI();
 
-const remote = new RippleAPI({ server : "wss://xrplcluster.com", feeCushion : 1.2, maxFeeXRP : "0.1" });
+const remote = new RippleAPI({ server : "wss://s1.ripple.com", feeCushion : 1.2, maxFeeXRP : "0.01" });
 remote.connection._config.connectionTimeout = 10000;
 remote.on('connected', () => { console.log('Remote connected'); });
 remote.on('disconnected', (code) => { console.log('Remote disconnected, code:', code); });
